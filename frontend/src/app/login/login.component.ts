@@ -1,47 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup , FormControl , Validators } from '@angular/forms';
-import {LoginService} from "./login.service";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from "./../services/login.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers:[LoginService]
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
 
-  userForm : FormGroup;
-  returnUrl: string ;
-  message : any ;
+  userForm: FormGroup;
+  returnUrl: string;
+  message: any;
 
-  constructor( private route: ActivatedRoute,
-        private router: Router,
-        private _loginService : LoginService ) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private _loginService: LoginService) { }
 
   ngOnInit() {
 
-    this.userForm=new FormGroup(
+    this.userForm = new FormGroup(
       {
-          username: new FormControl("UserName",Validators.required),
-          password: new FormControl("Password",Validators.required)
+        name: new FormControl('UserName', Validators.required)
       }
-      
-  );
+    );
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  
-  onSubmit(){
-      console.log(this.userForm.value);
-      this._loginService.addVideo(this.userForm.value).subscribe(resVideoData =>{
-      console.log(resVideoData);
+
+  onSubmit() {
+    // console.log(this.userForm.value);
+    this._loginService.login(this.userForm.value).subscribe(resData => {
+      // console.log(resData);
+      localStorage.setItem('currentUser', resData);
       this.router.navigate([this.returnUrl]);
-      },error => {
-                   /* this.alertService.error(error);*/
-                    this.message = error;
-                }
+    }, error => {
+      this.message = error;
+    }
     );
   }
 

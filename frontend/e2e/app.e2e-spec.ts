@@ -1,10 +1,10 @@
-import { TutorialPage } from './app.po';
+import { AngularTutorialPage } from './app.po';
 
-describe('tutorial App', () => {
-  let page: TutorialPage;
+describe('angular-tutorial App', () => {
+  let page: AngularTutorialPage;
 
   beforeEach(() => {
-    page = new TutorialPage();
+    page = new AngularTutorialPage();
   });
 
   it('should display welcome message', () => {
