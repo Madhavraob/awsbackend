@@ -7,9 +7,11 @@ import { UserListComponent } from "app/user-list/user-list.component";
 import { UserDetailsComponent } from "app/user-details/user-details.component";
 import { LoginComponent } from "app/login/login.component";
 import { AuthGuard } from "app/guards/auth.guard";
+import { HomeComponent } from "app/home/home.component";
 
 const routes: Routes = [{ path: '', component: UserListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
 { path: 'login', component: LoginComponent },
+{ path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
 { path: 'tform', component: TformComponent, canActivate: [AuthGuard] },
 { path: 'rform', component: RformComponent, canActivate: [AuthGuard] },
 { path: 'directives', component: UserListComponent, canActivate: [AuthGuard] },

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     // console.log(this.userForm.value);
     this._loginService.login(this.userForm.value).subscribe(resData => {
       // console.log(resData);
-      localStorage.setItem('currentUser', resData);
+      localStorage.setItem('currentUser', JSON.stringify(resData));
       this.router.navigate([this.returnUrl]);
     }, error => {
       this.message = error;

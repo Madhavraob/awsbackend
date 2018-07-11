@@ -16,6 +16,7 @@ import { UserService } from './services/user.service';
 import { CapPipePipe } from './cap-pipe.pipe';
 import { AdminModule } from "app/admin/admin.module";
 import { AuthGuard } from "app/guards/auth.guard";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthGuard } from "app/guards/auth.guard";
     UserListComponent,
     UserDetailsComponent,
     LoginComponent,
-    CapPipePipe
+    CapPipePipe,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
