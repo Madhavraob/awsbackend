@@ -12,7 +12,11 @@ export class UserService {
   constructor(private _http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    return this._http.get(`${this._baseUrl}/users`);
+    return this._http.get(`${this._baseUrl}users`);
+    // .pipe(map((res: Response) => { return res }));
+  }
+  getUser(id): Observable<any> {
+    return this._http.get(`${this._baseUrl}users/${id}`);
     // .pipe(map((res: Response) => { return res }));
   }
 
