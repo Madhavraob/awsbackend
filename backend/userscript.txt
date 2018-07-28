@@ -1,0 +1,121 @@
+https://node.university/blog/1001486/aws-ec2-hello-node
+
+-----------------------user data script---------------------------
+
+#!/bin/bash -ex
+# output user data logs into a separate place for debugging
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# get node into yum
+curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+# install node (and npm) with yum
+yum -y install nodejs
+# install pm2 to restart node app
+npm i -g pm2@2.4.3
+# get source code for hello world node server from GitHub's gist (could be private GitHub repo or private S3)
+curl "https://gist.githubusercontent.com/azat-co/5c035301e13037e52cd689205b08c121/raw/e22a4606401ce63af715792b3fe50ef869b0557f/hello-world-server.js" > /home/ec2-user/hello-world-server.js
+sudo chmod 755 /home/ec2-user/hello-world-server.js # optional
+# start the server (port 3000)
+pm2 start /home/ec2-user/hello-world-server.js -i 0 --name "node-app"
+# restart pm2 and thus node app on reboot
+crontab -l | { cat; echo "@reboot pm2 start /home/ec2-user/hello-world-server.js -i 0 --name \"node-app\""; } | crontab -
+sudo reboot
+
+------------------------------------------------------------------
+
+#!/bin/bash -ex
+# output user data logs into a separate place for debugging
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# get node into yum
+curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+# install node (and npm) with yum
+yum -y install nodejs
+# install git
+sudo yum -y install git
+# install pm2 to restart node app
+npm i -g pm2@2.4.3
+# get source code for hello world node server from GitHub's gist (could be private GitHub repo or private S3)
+# curl "https://gist.githubusercontent.com/azat-co/5c035301e13037e52cd689205b08c121/raw/e22a4606401ce63af715792b3fe50ef869b0557f/hello-world-server.js" > /home/ec2-user/hello-world-server.js
+cd /home/ec2-user/
+git clone https://github.com/Madhavraob/awsbackend.git
+cd /home/ec2-user/awsbackend/backend/
+npm i
+sudo chmod 755 /home/ec2-user/awsbackend/backend/server.js # optional
+# start the server (port 3000)
+pm2 start /home/ec2-user/awsbackend/backend/server.js -i 0 --name "node-app"
+# restart pm2 and thus node app on reboot
+crontab -l | { cat; echo "@reboot pm2 start /home/ec2-user/awsbackend/backend/server.js -i 0 --name \"node-app\""; } | crontab -
+sudo reboot
+
+------------------------------------------------------------------
+curl -X POST -u "Madhavraob:bfdb0fae3707462e8e6b41e90cea0097ffc07f25" "https://github.com/Madhavraob/awsbackend.git"
+
+curl -X POST -u "<github_username>:<github_token>" \
+    -d "{\"organization\": \"your_org_here\"}" \
+    "https://api.github.com/repos/neurobin/shc/forks"
+
+touch to create file
+echo to write ontent into file
+
+
+find file 
+find -name 'abc.txt'
+aws ec2 run-instances --image-id ami-6a003c0f --security-group-ids sg-827f4efd --count 1 
+	--instance-type t2.micro --key-name devenv-key --query 'Instances[0].InstanceId'
+
+sudo apt-get install git
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+or  sudo apt-get install nodejs npm
+
+--linux os
+https://nodejs.org/en/download/package-manager/
+sudo yum install git
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+sudo yum -y install nodejs
+
+
+
+
+aws s3api create-bucket --bucket institute-management --region us-east-1
+
+aws s3api create-bucket --bucket aws-demo-fe --region us-east-1
+
+
+aws s3 cp ./dist/ s3://institute-management/ --recursive
+
+aws s3 cp ./dist/ s3://aws-demo-fe/ --recursive
+
+
+aws s3 rm s3://aws-demo-fe/ --recursive
+
+aws s3 rb s3://angular-demo-madhav --force 
+
+ec2 image -- ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180522 (ami-6a003c0f)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9948781002
+
+
+https://www.sitepoint.com/getting-started-with-angular-2-using-typescript/
+
+https://github.com/kamranahmedse/developer-roadmap
+
+https://www.indeed.com/jobtrends/q-AngularJS-q-EmberJS-q-BackboneJS-q-SproutCore.html?relative=1
