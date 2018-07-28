@@ -12,14 +12,14 @@ var newId = 3;
 router.get("/users", function (req, res) {
   res.status(200).json(baseUsers);
 });
-
+/*
 router.post("/users", function (req, res) {
   var newUser = { id: newId, ...req.body };
   newId = newId + 1;
   baseUsers.push(newUser);
   res.status(200).json(newUser);
 });
-
+*/
 
 router.post("/login", function (req, res) {
   var loginUser = {};
