@@ -1,5 +1,31 @@
 https://node.university/blog/1001486/aws-ec2-hello-node
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
 
+----------working-------------user data script---------------------------
+
+#!/bin/bash -ex
+# output user data logs into a separate place for debugging
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# get node into yum
+curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+# install node (and npm) with yum
+yum -y install nodejs
+# install git
+sudo yum -y install git
+# install pm2 to restart node app
+npm i -g pm2@2.4.3
+# get source code for hello world node server from GitHub's gist (could be private GitHub repo or private S3)
+# curl "https://gist.githubusercontent.com/azat-co/5c035301e13037e52cd689205b08c121/raw/e22a4606401ce63af715792b3fe50ef869b0557f/hello-world-server.js" > /home/ec2-user/hello-world-server.js
+cd /home/ec2-user/
+git clone https://github.com/Madhavraob/awsbackend.git
+cd /home/ec2-user/awsbackend/backend/
+npm i
+sudo chmod 755 /home/ec2-user/awsbackend/backend/server.js # optional
+# start the server (port 3000)
+pm2 start /home/ec2-user/awsbackend/backend/server.js -i 0 --name "node-app"
+# restart pm2 and thus node app on reboot
+crontab -l | { cat; echo "@reboot pm2 start /home/ec2-user/awsbackend/backend/server.js -i 0 --name \"node-app\""; } | crontab -
+sudo reboot
 -----------------------user data script---------------------------
 
 #!/bin/bash -ex
