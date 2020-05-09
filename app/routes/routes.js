@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var baseUsers = [{ id: 1, name: 'madhav  update ecs', email: 'ma@ma.com', city: 'hyderabad', postalcode: 508206 },
 { id: 2, name: 'manoj', city: 'abc', postalcode: 123456 },
-{ id: 2, name: 'jagadish', city: 'def', postalcode: 456789 }];
+{ id: 3, name: 'jagadish', city: 'def', postalcode: 456789 }];
 var newId = 3;
 /*  "/users"
  *    GET: finds all users
@@ -12,14 +12,15 @@ var newId = 3;
 router.get("/users", function (req, res) {
   res.status(200).json(baseUsers);
 });
-/*
+
+
 router.post("/users", function (req, res) {
-  var newUser = { id: newId, ...req.body };
+  var newUser = { ...req.body, id: newId };
   newId = newId + 1;
   baseUsers.push(newUser);
   res.status(200).json(newUser);
 });
-*/
+
 
 router.post("/login", function (req, res) {
   var loginUser = {};
